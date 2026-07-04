@@ -1,10 +1,14 @@
 abstract class Shape {
+
     public abstract double area();
+
     public abstract double perimeter();
 }
 
+// Circle Class
 class Circle extends Shape {
-    private final double radius;
+
+    private double radius; // immutable
 
     public Circle(double radius) {
         this.radius = radius;
@@ -25,7 +29,9 @@ class Circle extends Shape {
     }
 }
 
+// Rectangle Class
 class Rectangle extends Shape {
+
     private double length;
     private double width;
 
@@ -45,44 +51,63 @@ class Rectangle extends Shape {
     }
 }
 
+// Triangle Class
 class Triangle extends Shape {
-    private double a, b, c;
 
-    public Triangle(double a, double b, double c) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
-    }
+    private double side1;
+    private double side2;
+    private double side3;
 
-    @Override
-    public double area() {
-        double s = (a + b + c) / 2; 
-        return Math.sqrt(s * (s - a) * (s - b) * (s - c));
+    public Triangle(double side1,
+                    double side2,
+                    double side3) {
+
+        this.side1 = side1;
+        this.side2 = side2;
+        this.side3 = side3;
     }
 
     @Override
     public double perimeter() {
-        return a + b + c;
+        return side1 + side2 + side3;
+    }
+
+    @Override
+    public double area() {
+
+        double s = perimeter() / 2;
+
+        return Math.sqrt(
+                s * (s - side1)
+                  * (s - side2)
+                  * (s - side3));
     }
 }
 
-public class ShapeReport {
+public class shapereport {
+
     public static void main(String[] args) {
 
         Shape[] shapes = {
-            new Circle(5),
-            new Rectangle(4, 6),
-            new Triangle(3, 4, 5)
+                new Circle(5),
+                new Rectangle(10, 4),
+                new Triangle(3, 4, 5)
         };
 
-        System.out.println("===== Shape Area Report =====");
-        System.out.printf("%-12s %-12s %-12s%n",
-                "Shape", "Area", "Perimeter");
+        System.out.println("===== AREA REPORT =====");
 
         for (Shape shape : shapes) {
-            System.out.printf("%-12s %-12.2f %-12.2f%n",
-                    shape.getClass().getSimpleName(),
-                    shape.area(),
+
+            System.out.println(
+                    "\nShape : " +
+                    shape.getClass().getSimpleName());
+
+            System.out.printf(
+                    "Area      : %.2f%n",
+                    shape.area());
+
+            System.out.printf(
+                    "Perimeter : %.2f%n",
                     shape.perimeter());
         }
     }
